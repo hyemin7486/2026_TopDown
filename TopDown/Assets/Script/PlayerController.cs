@@ -72,6 +72,9 @@ public class PlayerController : MonoBehaviour
                     ChangeSprites(spriteDown);
             }
         }
+
+        input = value.Get<Vector2>();
+        velocity = input.normalized * moveSpeed;
     }
 
     private void Update()
@@ -99,9 +102,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + velocity  * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
     }
-
     private void ChangeSprites(Sprite[] newSprites)
     {
         if(currentSprites == newSprites) 
@@ -113,12 +115,6 @@ public class PlayerController : MonoBehaviour
         sr.sprite = currentSprites[frameIndex];
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Enemy"))
-        {
-            GameManager.Instance.GameOver();
-        }
-    }
+    
 
 }
