@@ -111,4 +111,14 @@ public class GameDataManager : MonoBehaviour
 
         Debug.Log("PlayerPrefs 삭제 완료");
     }
+
+    public void SaveBestTime(float surviveTime)
+    {
+        if (surviveTime > saveData.bestTime)
+        {
+            saveData.bestTime = surviveTime;
+        }
+
+        SaveJsonData();
+    }
 }

@@ -3,18 +3,27 @@ using UnityEngine;
 public class ArrowSpawner : MonoBehaviour
 {
     public GameObject arrowPrefab;
+    public Transform player;
 
     public float spawnInterval = 1f;
 
     private float timer;
+    private float gameTime;
 
     private void Update()
     {
+        gameTime += Time.deltaTime;
+
+        spawnInterval = Mathf.Max(
+            0.15f,
+            1f - gameTime * 0.015f
+        );
+
         timer += Time.deltaTime;
 
         if (timer >= spawnInterval)
         {
-            timer = 0;
+            timer = 0f;
             SpawnArrow();
         }
     }
@@ -24,34 +33,43 @@ public class ArrowSpawner : MonoBehaviour
         int randomSide = Random.Range(0, 4);
 
         Vector2 spawnPos = Vector2.zero;
-        Vector2 moveDir = Vector2.zero;
 
         switch (randomSide)
         {
-            case 0: 
+            case 0: // 위
                 spawnPos = new Vector2(Random.Range(-8f, 8f), 6f);
-                moveDir = Vector2.down;
                 break;
 
-            case 1: 
+            case 1: // 아래
                 spawnPos = new Vector2(Random.Range(-8f, 8f), -6f);
-                moveDir = Vector2.up;
                 break;
 
-            case 2: 
+            case 2: // 왼쪽
                 spawnPos = new Vector2(-10f, Random.Range(-4f, 4f));
-                moveDir = Vector2.right;
                 break;
 
-            case 3: 
+            case 3: // 오른쪽
                 spawnPos = new Vector2(10f, Random.Range(-4f, 4f));
-                moveDir = Vector2.left;
                 break;
         }
 
-        GameObject arrow =
-            Instantiate(arrowPrefab, spawnPos, Quaternion.identity);
+        GameObject arrow = Instantiate(
+            arrowPrefab,
+            spawnPos,
+            Quaternion.identity
+        );
 
-        arrow.GetComponent<Arrow>().SetDirection(moveDir);
+        Arrow arrowScript = arrow.GetComponent<Arrow>();
+
+        arrowScript.speed = Mathf.Min(
+            12f,
+            5f + gameTime * 0.1f
+        );
+
+        // 생성 순간 플레이어 방향 계산
+        Vector2 moveDir =
+            ((Vector2)player.position - spawnPos).normalized;
+
+        arrowScript.SetDirection(moveDir);
     }
 }
