@@ -4,13 +4,24 @@ public class PlayerHit : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("충돌 발생 : " + collision.name);
+        if (!collision.CompareTag("Arrow"))
+            return;
 
-        if (collision.CompareTag("Arrow"))
+        if (GameDataManager.Instance.saveData.shieldCount > 0)
         {
-            Debug.Log("화살 맞음");
+            GameDataManager.Instance.saveData.shieldCount--;
 
-            GameManager.Instance.GameOver();
+            GameDataManager.Instance.SaveJsonData();
+
+            Debug.Log("방패 사용");
+
+            Destroy(collision.gameObject);
+
+            return;
         }
+
+        Debug.Log("게임오버 실행");
+
+        GameManager.Instance.GameOver();
     }
 }

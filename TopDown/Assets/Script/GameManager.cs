@@ -13,15 +13,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
     }
 
     public void StartGame()
@@ -43,11 +35,13 @@ public class GameManager : MonoBehaviour
 
         if (gameOverUI != null)
         {
+            Debug.Log("게임오버 UI 실행");
+
             gameOverUI.Show(TimeUI.surviveTime);
         }
         else
         {
-            Debug.LogError("GameOverUI 연결 안됨!");
+            Debug.LogError("게임오버 UI 연결 안됨");
         }
     }
 

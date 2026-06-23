@@ -6,4 +6,6 @@ public class SaveData
     public float bestTime;
 
     public int coin;
+
+    public int shieldCount;
 }

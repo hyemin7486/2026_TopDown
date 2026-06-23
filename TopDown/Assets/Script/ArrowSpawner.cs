@@ -36,19 +36,19 @@ public class ArrowSpawner : MonoBehaviour
 
         switch (randomSide)
         {
-            case 0: // 위
+            case 0: 
                 spawnPos = new Vector2(Random.Range(-8f, 8f), 6f);
                 break;
 
-            case 1: // 아래
+            case 1: 
                 spawnPos = new Vector2(Random.Range(-8f, 8f), -6f);
                 break;
 
-            case 2: // 왼쪽
+            case 2: 
                 spawnPos = new Vector2(-10f, Random.Range(-4f, 4f));
                 break;
 
-            case 3: // 오른쪽
+            case 3: 
                 spawnPos = new Vector2(10f, Random.Range(-4f, 4f));
                 break;
         }
@@ -66,7 +66,7 @@ public class ArrowSpawner : MonoBehaviour
             5f + gameTime * 0.1f
         );
 
-        // 생성 순간 플레이어 방향 계산
+       
         Vector2 moveDir =
             ((Vector2)player.position - spawnPos).normalized;
 

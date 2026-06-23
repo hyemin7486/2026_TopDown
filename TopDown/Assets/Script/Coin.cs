@@ -10,6 +10,8 @@ public class Coin : MonoBehaviour
 
             GameDataManager.Instance.SaveJsonData();
 
+            CoinUI.Instance.UpdateCoin();
+
             Destroy(gameObject);
         }
     }
